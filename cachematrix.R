@@ -22,14 +22,3 @@ makeCacheMatrix <- function(x = matrix()) {
 ## of a previous run. if found returns that, otherwise computes the
 ## result and then stores it in the cache as well as returning it to
 ## the caller
-cacheSolve <- function(x) {
-  inverse <- x$getinv()
-  if(!is.null(inverse)) {
-    message("getting cached data")
-    return(inverse)
-  }
-  data <- x$get()
-  inverse <- solve(data)
-  x$setinv(inverse)
-  inverse
-}
