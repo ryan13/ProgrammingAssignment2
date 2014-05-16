@@ -4,13 +4,13 @@
 ## its inverse. exposes setters and getters for both. invalidates
 ## cache on set.
 makeCacheMatrix <- function(x = matrix()) {
-  inverse <- NULL
+  tmp <- NULL
   set <- function(y) {
     x <<- y
-    inverse <<- NULL
+    tmp <<- NULL
   }
   get <- function() x
-  setinv <- function(inv) inverse <<- inv
+  setinv <- function(inv) tmp <<- inv
   getinv <- function() inverse
   list(set = set, get = get, setinv = setinv, getinv = getinv)
 }
@@ -22,3 +22,15 @@ makeCacheMatrix <- function(x = matrix()) {
 ## of a previous run. if found returns that, otherwise computes the
 ## result and then stores it in the cache as well as returning it to
 ## the caller
+
+cacheSolve <- function(x) {
+  tmp <- x$getinv()
+  if(!is.null(tmp)) {
+    message(" current cached data")
+    return(tmp)
+  }
+  data <- x$get()
+  tmp <- solve(data)
+  x$setinv(tmp)
+  result <- tmp
+  result
